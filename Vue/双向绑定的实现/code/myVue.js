@@ -4,9 +4,11 @@ class myVue{
     this.$data = options.data
     this.$options =options
     if(this.$el){
+      // 1.实现数据观察者
       new Observer(this.$data)
+      // 2.实现指令解析器
       new Compile(this.$el,this)
-      
+      // 实现proxy代理
      this.proxyData(this.$data)
     }
   } 
@@ -65,6 +67,7 @@ class Compile{
       }
     })
   }
+  // 编译元素节点
   compileElement(node){
     const attributes = node.attributes; 
     [...attributes].forEach(attr=>{
@@ -83,6 +86,7 @@ class Compile{
       }
     })
   }
+  // 编译文本节点
   compileText(node){
     const content = node.textContent
     if(/\{\{(.+?)\}\}/.test(content)){
@@ -94,6 +98,7 @@ class Compile{
   isDirective(attrName){
     return attrName.startsWith('v-')
   }
+  // 判断当前attrName是否是一个事件，以@开头的事件绑定
   isEventName(attrName){
     return attrName.startsWith('@')
   }
@@ -117,6 +122,7 @@ const compileUtil = {
     console.log(expr);
     if(expr.indexOf('{{')!==-1){
       value = expr.replace(/\{\{(.+?)\}\}/g,(...args)=>{
+        // 绑定watcher从而更新视图
         console.log(args[1]);
         new Watcher(vm,args[1],()=>{
           console.log(expr);
@@ -125,11 +131,12 @@ const compileUtil = {
         })
         return this.getVal(args[1],vm);
       })
-    }else{//文本节点
+    }else{//文本节点 也可能是v-text='obj.name' v-text ='msg'
       value = this.getVal(expr,vm)
-      
       new Watcher(vm,expr,(newVal)=>{
+         // 绑定watcher从而更新视图
         console.log(expr);
+        
         this.updater.textUpdater(node,newVal)
         console.log(expr);
       })
@@ -144,6 +151,8 @@ const compileUtil = {
     this.updater.htmlUpdater(node,value)
   },
   model(node,expr,vm){
+      // 订阅数据变化时 绑定更新函数 更新视图的变化
+    // 数据==>视图
     const value =this.getVal(expr,vm)
     new Watcher(vm,expr,(newVal)=>{
       this.updater.modelUpdater(node,newVal)
@@ -246,6 +255,7 @@ class Dep{
   constructor(){
     this.subs = []
   }
+  // 收集观察者
   addSub(watcher){
     console.log('1');
     this.subs.push(watcher)
