@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-focus>
+    <p v-demo>{{name}}</p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    // 全局自定义指令，但是必须放在Vue实例前
+    Vue.directive('demo',{
+      inserted:function(el){
+        console.log('这是自定义指令demo');
+      }
+    })
+    // Vue实例
+    let vm=new Vue({
+      el:'#app',
+      data:{
+        name:'javaEE'
+      },
+      // 局部自定义指令
+      directives:{
+        focus:{//(三个钩子函数，inserted,bind,update)
+          inserted:function(el){
+            el.focus()
+            console.log('1');
+          }
+        }
+      }
+      
+    })
+    
+  </script>
+</body>
+</html>
