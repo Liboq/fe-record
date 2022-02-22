@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+ 
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+	</head>
+ 
+	<body>
+		<div id="app">
+			<!-- v-myorder:arg.a=value -->
+			<!-- arg用于对该指令区别类别 .a表示对该指令类别的修饰符，value类似于值对入参value -->
+			<!--如果你不需要arg.a，也可以直接写成 v-myorder=value -->
+			<p v-didemo:foo.a="msg">{{msg}}</p>
+			<button @click="change">改变msg</button>
+		</div>
+	</body>
+ 
+	<script>
+		Vue.directive("didemo", {
+			bind: function(el, binding, vnode) {
+				console.log(1, el, binding);
+				el.style.color = "red"; //设置文本字体颜色为红色
+			},
+			inserted: function(el, binding, vnode) {
+				console.log(2, el, binding);
+			},
+			update: function(el, binding, vnode) {
+				console.log(3, el, binding);
+			},
+			componentUpdated: function(el, binding, vnode) {
+				console.log(4, el, binding);
+			},
+			unbind: function(el, binding, vnode) {
+				console.log(5, el, binding);
+			}
+		});
+ 
+		var app = new Vue({
+			el: "#app",
+			data: {
+				msg: "hello world"
+			},
+			methods: {
+				change: function() {
+					this.msg = "i am change";
+				}
+			}
+		});
+	</script>
+ 
+</html>

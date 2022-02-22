@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<div id="app">
+  <p>{{currentTime}}</p>
+</div>
+
+<body>
+  <div id="app"></div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el:'#app',
+      data: {
+        timer: "",
+        currentTime: new Date()
+      },
+      created() {
+        var vm = this;
+        vm.timer = setInterval(() => {
+          var y = new Date().getFullYear();
+          var m = vm.appendZero(new Date().getMonth() + 1);
+          var d = vm.appendZero(new Date().getHours());
+          var ho = vm.appendZero(new Date().getHours());
+          var mi = vm.appendZero(new Date().getMinutes());
+          var s = vm.appendZero(new Date().getSeconds())
+          vm.currentTime = y + "/" + m + '/' + d + ' ' + ho + ':' + mi + ':' + s;
+        }, 1000)
+      },
+      methods: {
+        appendZero(obj) {
+          if (obj < 10) {
+            return "0" + obj;
+          } else {
+            return obj
+          }
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>
