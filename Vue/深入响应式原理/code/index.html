@@ -1,0 +1,30 @@
+<div id="app">{{people}}</div>
+<button id="change">chnage</button>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+/* 点击按钮 页面显示people新的键值对{ "name": "张三", "b": 2, "age": 18 },
+** 但是在vue-devto0ls中修改b的值是页面时会发生变化的， 修改age的值不会发生变化，
+** 这应该就是响应式和非响应式的不同了
+*/
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      people: { name: '张三' }
+    },
+    created() {
+      console.log(this);
+    }
+  })
+  document.querySelector('#change').addEventListener('click', () => {
+    Vue.set(vm.people, 'b', 2)
+    vm.people.age = 18
+    console.log(vm);  
+
+  })
+// vm.people.name='lisi'   //  这样改变的不是响应式的
+</script>
+
+<style>
+
+</style>

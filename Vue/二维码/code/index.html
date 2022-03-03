@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <style>
+    #qrcode {
+width:160px;
+  height:260px;
+  margin-top:15px;
+}  
+  </style>
+</head>
+<body>
+  <input id="text" type="text" value="1" /><br />
+<div id="qrcode"></div>
+  <!-- <div id="app">
+    <el-button type="primary" @click="visible = true">Button</el-button>
+    <el-dialog :visible.sync="visible" title="Hello world">
+      <p>Try Element</p>
+    </el-dialog>
+  </div> -->
+</body>
+<script src="./jquery.min.js"></script>
+<script src="./qrcode.min.js"></script>
+  <!-- import Vue before Element -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+   import JavaScript -->
+  <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> --> 
+  <script>
+    // new Vue({
+    //   el: '#app',
+    //   data: function() {
+    //     return { visible: false }
+    //   }
+    // })
+    var qrcode = new QRCode("qrcode");
+
+function makeCode () {      
+    var elText = document.getElementById("text");
+    
+    if (!elText.value) {
+        alert("Input a text");
+        elText.focus();
+        return;
+    }
+    
+    qrcode.makeCode(elText.value);
+}
+
+
+
+$("#text").
+on("blur", function () {
+    makeCode();
+}).
+on("keydown", function (e) {
+    if (e.keyCode == 13) {
+        makeCode();
+    }
+});
+  </script>
+</html>

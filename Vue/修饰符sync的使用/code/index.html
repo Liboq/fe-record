@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">我是父id: {{id}}
+    <div><comp :id.sync="id"></comp><!-- 在父组件里 给要传递的值 .sync -->
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  
+  <script>
+    Vue.component('comp',{
+      props:['id'],
+      template:`<div>我是子id: {{id}}<button @click="btnAdd">子+1</button><button @click="btnAdd1">父子+1</button></div>`,
+      methods: {
+        btnAdd(){
+          this.id+=1 //这样只会让子组件里的id发生变化，父组件里的id不会发生变化
+        },
+        btnAdd1(){
+          this.id+=1 //这样会让子组件和父组件里的id同事发生变化，这样他们的数据是一样的
+          this.$emit('update:id',this.id) //在子组件里把改变的值传给父组件 this.$emit('update:传递过来的数据'，变化的数据)
+        }
+      },
+    })
+    new Vue({
+      el:'#app',
+      data:{
+        id: 1
+      }
+    })
+  </script>
+</body>
+</html>
