@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var _const = function _const(data,value) {
+      window.data = value //把定义的data挂载到window并赋值为value
+      Object.defineProperty(window,data,{
+        enumerable:false,
+        configurable:false,
+        get:function(){
+          return value
+        },
+        set:function(data){
+          if(data !== value) {  //若是要改变data的值则会抛出异常
+            throw new TypeError('Assigment to constant variable') // 抛出异常
+          }else{
+            return value
+          }
+        }
+      })
+    }
+    _const('a',[1,2,3])
+    console.log(a);
+    delete a
+    console.log(a);
+    for (var  item in window) {
+      if(item === 'a'){
+        console.log(window[item]);//// 因为不可枚举，所以不执行
+      }
+    }
+    a[1]=20//这里会报错，const定义的变量不能改变
+  </script>
+</body>
+</html>

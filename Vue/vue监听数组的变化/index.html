@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // Vue是如何监听数组的变化的？
+    // 答：修改了数组对象的原型，在原本的原型链上插入了一个新的原型对象，在新的原型对象上重写了7个变异方法（push/pop/unshift/shift/splice/sort/reverse）
+
+    // this.arr[0] = 12
+    // 为什么没有像对象一样用Object.defineProperty监听数组中所有的元素变化呢？
+    // 答：因为数组中的元素有可能有很多个，如果循环遍历，开销太大！不能这样。。。Vue给我们提供了支持驱动视图的API（this.$set, Vue.set），还有重写了7个变异方法
+
+    var arrayProto = Array.prototype
+    var newArrayProto = Object.create(arrayProto)
+
+    newArrayProto.push = function (...rest) {
+      // 监听到调用了数组的push方法，执行视图渲染的代码
+      console.log('监听到调用了数组的push方法，执行视图渲染的代码，添加之前的逻辑。。。。')
+
+      // 为了保留原来的数组push方法的逻辑
+      arrayProto.push.call(this, ...rest)
+
+      console.log('数组push方法添加之后的逻辑，。。。。。')
+    }
+    // 在递归遍历数据的时候，只要找到数组数据，就将其原型指向为newArrayProto
+    // arr.__proto__ = newArrayProto
+    var arr = [1, 2, 3]
+    console.log(arr.__proto__ === Array.prototype);
+    arr.__proto__ = newArrayProto    //Array.prototype.__proto__
+    console.log(arr.__proto__ === Array.prototype);
+    arr.push(4)
+    var arr1 = [1,2]
+    // arr.pop(1)
+    console.log(arr);
+  </script>
+</body>
+
+</html>

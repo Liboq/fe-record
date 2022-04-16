@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 假设无限次触发：防抖函数永远不会真正执行；节流函数则会按照间隔时间执行 -->
+  输入框<input type="text" class="debounce">
+  <script>
+    // 节流
+    window.addEventListener('mousemove',function(e){
+      // console.log(e.pageX);
+      throttle(e.pageX)
+    })
+    let timer1= null
+    function throttle(content){
+      if(timer1){return}
+      timer1=setTimeout(function(){
+        console.log(content);
+        timer1=null
+      },500)
+      // clearTimeout(timer1)
+    }
+
+
+// 
+// 
+// 
+// 
+
+ //模拟一段ajax请求，防抖
+function ajax(content) {
+  console.log('ajax request ' + content)
+}
+
+function debounce(fun, delay) {
+    return function (args) {
+        let that = this
+        let _args = args
+        clearTimeout(fun.id)
+        fun.id = setTimeout(function () {
+            fun.call(that, _args)
+        }, delay)
+    }
+}
+    
+let inputb = document.querySelector('.debounce')
+
+let debounceAjax = debounce(ajax, 500)
+
+inputb.addEventListener('keyup', function (e) {
+        debounceAjax(e.target.value)
+    })
+  </script>
+</body>
+</html>

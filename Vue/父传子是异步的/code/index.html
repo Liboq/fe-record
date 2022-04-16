@@ -28,6 +28,7 @@
         num:1
       },
       methods: {
+        // 这里也就是说明了当在一个方法里改变了一个父组件的值，在同一个方法里来获取这个子组件props里 的值，他还是以前的那一个，说明，父组件传子组件是异步的
         add(){
           this.num+=1
           console.log(this.$refs.son.id);   //1

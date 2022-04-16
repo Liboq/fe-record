@@ -1,0 +1,20 @@
+{
+  "name": "demo01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev webpack --mode development",
+    "test": "cross-env NODE_ENV=test webpack --mode production",
+    "build": "cross-env NODE_ENV=prod webpack --mode production"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

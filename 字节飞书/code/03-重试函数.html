@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+function loop(fn,count){
+  let n =1
+  fn1(fn,count,n)
+}
+function fn1(fn,count,n){
+  fn(n).then((res)=>resolve(res)).catch((err)=>{
+    if(n++==count){
+      setTimeout(()=>{
+        console.log('aaa');
+      return fn(n)
+      },1000)
+     
+    }else{
+      console.log('bbb');
+    fn1(fn,count,n)
+    }
+  })
+}
+function fn(k) {
+  return new Promise((resolve, reject) => {
+      if (k >= 3) {
+        console.log(k);
+          resolve(k)
+      } else {
+        console.log(k);
+        reject('hhh')
+          
+      }
+  })
+}
+function test(n){
+  if(n>0){
+    throw new Error('llllll')
+  }else{
+    console.log(1);
+  }
+}
+loop(fn,2)
+  </script>
+</body>
+</html>

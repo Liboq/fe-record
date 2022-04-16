@@ -24,7 +24,7 @@ class Observer{
       set:(newval)=>{
         this.observer(newval)
         if(newval !== value){
-          value = newval
+          value = newval //
           // 如果新旧值不同，则告诉Dep通知变化
           dep.notify()
         }
