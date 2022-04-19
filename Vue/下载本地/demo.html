@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+<body>
+  <div id="app"><div><button @click="download">下载</button></div></div>
+  <script>
+    let vm = new Vue({
+      el:'#app',
+      data:{
+
+      },
+      methods: {
+        download() {
+                let content = '11111111111111111111111111111';
+                let eleLink = document.createElement('a');
+                eleLink.download = `${this.artist}-${this.title}.text`;
+                eleLink.style.display = 'none';
+                //把字符内容转换成blob地址
+                let blob = new Blob([content]);
+                eleLink.href = URL.createObjectURL(blob);
+                //把链接地址加到document里
+                document.body.appendChild(eleLink);
+                //触发点击
+                eleLink.click();
+                //然后移除掉这个新加的控件
+                document.body.removeChild(eleLink);
+        },
+      },
+    })
+     
+  </script>
+</body>
+</html>

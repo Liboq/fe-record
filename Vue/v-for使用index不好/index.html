@@ -12,12 +12,21 @@
 <body>
   <div id="app">
     <ul>
-      <li v-for="(value, index) in arr" :key="index">
+      <li v-for="(value, index) in arr" >
         {{value}}
         <test />
       </li>
     </ul>
+    <ul>
+      <hr>
+      <li v-for="(value, index) in arr1" :key="value.id">
+        {{value.name}}
+        <test />
+      </li>
+    </ul>
     <button @click="handleDelete">delete</button>
+    <button @click="add">add</button>
+    <button @click="del">del</button>
   </div>
   </div>
 </body>
@@ -37,19 +46,29 @@
 3
 0.41327399068604365
 你会发现value发生了改变，但是test组件中的值却没有发生改变
-是因为diff算法在进行patchVnode时，会去检查props是否更新，而不会去管组件是否有无变换，若是key没有变换，则会对比新旧props,来进行新props替换props，而组件对应的key没变，组件就不会重新渲染，这里删除了一个，就会发现新的dom中少了一个，就把最后一个key给丢了
- */
+是因为diff算法在进行patchVnode时，会去检查props是否更新，而不会去管组件是否有无变换，若是key没有变换，
+则会对比新旧props,来进行新props替换props，而组件对应的key没变，组件就不会重新渲染，这里删除了一个，就会发现新的dom中少了一个，就把最后一个key给丢了
+  然后我又加了一个arr1，里面有id,当v-for:arr1，没有key的时候你添加一个元素到前面，这个的ul所有元素都会重新渲染（除了组件）
+  但是当你添加了key的值时他的id时，添加元素只会让添加进去的那个元素重新渲染
+*/
   new Vue({
     name: "App",
     el: '#app',
     data() {
       return {
-        arr: [1, 2, 3]
+        arr: [1, 2, 3],
+        arr1:[{name:'zs',id:1},{name:'ls',id:2}]
       };
     },
     methods: {
       handleDelete() {
         this.arr.splice(0, 1);
+      },
+      add(){
+        this.arr1.unshift({name:'666',id:3})
+      },
+      del(){
+        this.arr1.shift()
       }
     },
     components: {
