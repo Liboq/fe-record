@@ -98,9 +98,17 @@
     "name": "小涛",
     "pid": "06",
     "job": "运维工程师"
+  },
+  {
+    "id": "15",
+    "name": "小涛",
+    "pid": "13",
+    "job": "运维工程师"
   }
 ]
-
+/*这里用的方法是先给每个数据添加一个chirdren，很妙，然后 再遍历一次，
+这里用的浅拷贝，只拷贝了地址，所以后面的值变了，数组里的值也会发生了变化，
+如果pid不存在即他就是父级，若存在pid，则让和该id相匹配的pid 的children添加该元素 */
 const toTreeNode = function(arr){
   let map = {}
   let array =[]
@@ -119,9 +127,11 @@ const toTreeNode = function(arr){
       array.push(newItem)
     }
   }
+  console.log(map);
   return array
-
+  
 }
+
 
 console.log(...toTreeNode(arr)); 
 
