@@ -8,9 +8,12 @@
 </head>
 <body>
   <script>
+    // const 定义的基础类型是不可以改变的，但是定义的引用类型可以改变，因为它指的不可变是指的它的地址值不可以改变
+    // const 和 let 定义的值放在块级作用域内，不可以在window上找到，在scope上的script可以找到，他们不是全局作用域的值，可以直接访问
     var _const = function _const(data,value) {
-      window.data = value //把定义的data挂载到window并赋值为value
-      Object.defineProperty(window,data,{
+      window[data] = value //把定义的data挂载到window并赋值为value
+      if(typeof value !=="object"&& data!==null){
+        Object.defineProperty(window,data,{
         enumerable:false,
         configurable:false,
         get:function(){
@@ -24,17 +27,23 @@
           }
         }
       })
+      }else{
+        console.log(1111);
+      }
+      
     }
     _const('a',[1,2,3])
-    console.log(a);
-    delete a
-    console.log(a);
+    _const('b',1)
+    // console.log(a);
+    // delete a
+    // console.log(a);
+    console.log(b);
     for (var  item in window) {
       if(item === 'a'){
         console.log(window[item]);//// 因为不可枚举，所以不执行
       }
     }
-    a[1]=20//这里会报错，const定义的变量不能改变
+    b=20//这里会报错，const定义的变量不能改变
   </script>
 </body>
 </html>
