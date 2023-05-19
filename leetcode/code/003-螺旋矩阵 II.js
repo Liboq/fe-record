@@ -1,6 +1,7 @@
 /**
  * @param {number} n
  * @return {number[][]}
+ * 链接：https://leetcode.cn/problems/spiral-matrix-ii/
  */
  var generateMatrix = function(n) {
     let arr=Array.from(new Array(n),()=>new Array(n).fill(0));//这里可以初始化数组为[ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ]样式

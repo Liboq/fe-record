@@ -1,0 +1,49 @@
+.bar{
+    width:2.91px;
+    display: inline-block;
+    background-color: blue;
+}
+.bar+.bar{
+    margin-left:1px;
+}
+.bar:hover{
+    fill: white;
+}
+svg{
+    position: relative;
+}
+.visHolder{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 20px;
+    background-color: #fff;
+}
+.tooltip{
+    width: 100px;
+    height: 50px;
+    background-color: lightsteelblue;
+    opacity: .8;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    height:100%;
+    text-align: center;
+    background-color: #708090;
+}
+.container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+html{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}

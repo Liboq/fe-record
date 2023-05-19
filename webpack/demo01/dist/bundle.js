@@ -15,7 +15,7 @@
   \**********************/
 /***/ ((module) => {
 
-eval("const a = 'hello word'\r\nconsole.log(a);\r\nmodule.exports = a;\n\n//# sourceURL=webpack://demo01/./src/index.js?");
+eval("const a = 'hello word'\nconsole.log(a);\nmodule.exports = a;\n\n//# sourceURL=webpack://demo01/./src/index.js?");
 
 /***/ })
 

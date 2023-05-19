@@ -2,6 +2,7 @@
  * @param {number} low
  * @param {number} high
  * @return {number[]}
+ * 链接：https://leetcode.cn/problems/sequential-digits/
  */
 // 思路真的很重要
 var sequentialDigits = function (low, high) {

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.min.js"
+      integrity="sha512-nfUlp2ZWPKWlnAH/OsMeAqRSYBxOdPYeBXwceyw6QqqZ7uTT/s5/eS1hMKphjVBouk0jf/JQ8ULVJRnEqSHkXA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <link rel="stylesheet" href="./index.css">
+
+</head>
+
+<body>
+   <div class="container">
+      <div class="title">GDP</div>
+      <div class="visHolder"></div>
+   </div>
+   <script>
+      let dataset;
+      let beginY;
+      let endY;
+      const data = fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json').then(res => res.json()).then(res => {
+         console.log(res)
+         dataset = res.data
+         beginY = res.from_date
+         endY = res.to_date
+      }).then(() => [
+         generate()
+      ])
+      const generate = () => {
+         if (dataset) {
+            console.log(dataset);
+            const w = 1000;
+            const h = 600;
+            const padding = 60;
+
+            const xScale = d3.scaleLinear()
+               .domain([d3.min(dataset, (d) => +(d[0].slice(0, 4))), d3.max(dataset, (d) => +(d[0].slice(0, 4)))])
+               .range([padding, w - padding]);
+
+            const yScale = d3.scaleLinear()
+               .domain([0, d3.max(dataset, (d) => d[1])])
+               .range([h - padding, padding]);
+            console.log(yScale(243.4));
+            const svg = d3.select(".visHolder")
+               .append("svg")
+               .attr("width", w)
+               .attr("height", h);
+
+
+
+            const xAxis = d3.axisBottom(xScale).ticks(14).tickFormat(function (d) { return parseInt(d, 10) });
+            // 在这行下面添加代码
+            const yAxis = d3.axisLeft(yScale);
+            // 在这行上面添加代码
+
+            svg.append("g")
+               .attr("transform", "translate(0," + (h - padding) + ")")
+               .call(xAxis);
+
+            // 在这行下面添加代码
+            svg.append("g")
+               .attr("transform", "translate(60, 0 )")
+               .call(yAxis);
+
+            svg.selectAll("rect")
+               .data(dataset)
+               .enter()
+               .append("rect")
+               .attr('height', (d) => h - yScale(d[1]) - padding + 'px')
+               .attr("x", (d, i) => i * 3.2 + padding)
+               .attr("y", (d) => yScale(d[1]))
+               .attr("class", "bar")
+               .attr('fill', 'rgb(51, 173, 255)')
+               .attr('text', d => d[1])
+
+               .on("mouseover", function (d) {
+                  console.log(d);
+                  const data = this["__data__"];
+                  d3.select(this)
+                     .style("fill", "orange");
+                  // 添加鼠标悬停提示框
+                  tooltip.style("visibility", "visible")
+                  .style("left",d.x+'px')
+                  .style("top",d.y+'px')
+
+                     .text("year:"+data[0].slice(0,4)+'   gdp:'+data[1]);
+               })
+               .on("mouseout", function (d) {
+                  d3.select(this)
+                     .style("fill", 'rgb(51, 173, 255)');
+                  // 隐藏鼠标悬停提示框
+                  tooltip.style("visibility", "hidden");
+               });
+
+            // 创建鼠标悬停提示框
+            var tooltip = d3.select(".visHolder")
+               .append("div")
+               .attr('class','tooltip')
+               .style("position", "absolute")
+               .style("z-index", "10")
+               .style("visibility", "hidden");
+
+
+         }
+      }
+
+
+
+      // 在这行上面添加代码
+
+   </script>
+</body>
+
+</html>

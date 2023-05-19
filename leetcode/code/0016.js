@@ -1,4 +1,4 @@
-const user = { name: '张三', company: '黑马', department: '长沙校区' };
+const user = { name: '张三', company: '腾讯', department: '深圳总部' };
 const tpl = '你好，{{name     }}，欢迎来到{{    company}}·{{ department }}！';
 function template(tpl, data) {
 	// show your code...
@@ -12,4 +12,4 @@ function template(tpl, data) {
   return tpl
 }
 
-template(tpl, user); // "你好，张三，欢迎来到黑马·长沙校区！"
+template(tpl, user); //
