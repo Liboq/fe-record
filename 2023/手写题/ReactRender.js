@@ -31,43 +31,20 @@
   </span>
 </div>
 */
-
-const render = (el, num = 0) => {
-  let template = "";
-  let kongString = "";
-  for (let i = 0; i < num; i++) {
-    kongString += " ";
+// 浏览器环境
+const render = (el) => {
+  const element = document.createElement(el.tag.toLowerCase());
+  if (el.attrs) {
+    for (const attr in el.attrs) {
+      element.setAttribute(attr, el.attrs[attr]);
+    }
   }
-  if (el.tag) {
-    const lower = el.tag.toLowerCase();
-    const attrsTemp = renderAttrs(el.attrs);
-    const sonTemplate = renderChildren(el.children, num+1);
-    template = `${kongString}<${lower}${attrsTemp ? " " + attrsTemp : ""}>${
-      sonTemplate ? "\n" : ""
-    }`;
-    template += sonTemplate + `</${lower}> \n`;
-  }
-  return template;
-};
-const renderAttrs = (Attrs) => {
-  let template = "";
-  for (const attr in Attrs) {
-    template += `${attr}="${Attrs[attr]}"`;
-  }
-  return template;
-};
-const renderChildren = (children, num) => {
-  let kongString = "";
-  for (let i = 0; i < num; i++) {
-    kongString += " ";
-  }
-  let childrenTemp = "";
-  if (children.length > 1) {
-    children.forEach((item) => {
-      childrenTemp += kongString+render(item,num+1);
+  if (el.children) {
+    el.children.forEach((child) => {
+      element.appendChild(elRender(child));
     });
   }
-  return childrenTemp;
+  return element;
 };
 const example = {
   tag: "DIV",
