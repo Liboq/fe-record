@@ -13,7 +13,6 @@ var maxSubArray = function(nums) {
         } 
         // 如果当前的 sum 小于等于 0，表示当前的 num 单独组成一个子数组的和要大于之前的子数组和，因此更新 sum 为当前元素 num。
         else {
-
             sum = num;
         }
         ans = Math.max(ans, sum);

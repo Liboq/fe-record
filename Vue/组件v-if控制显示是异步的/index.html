@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,11 +8,13 @@
   <title>Document</title>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 </head>
+
 <body>
   <div id="app">
-  <div v-if="show" ref="show">123456</div>
-  <button @click ="btn">111111</button>
-</div>
+    <div v-if="show" ref="show">123456</div>
+    <div>{{obj.b}}</div>
+    <button @click="btn">111111</button>
+  </div>
 
   <script>
     /* 
@@ -22,39 +25,45 @@
     
     */
     const vm = new Vue({
-      el:'#app',
-      data:{
-        show:false
+      el: '#app',
+      data: {
+        show: false,
+        obj: {
+          a: 1,
+          b: 2
+        }
       },
       methods: {
-       /* 
-        *在这里要说的就是改变数据状态，视图的更新是异步的，就是 例如 本来 show为false，
-        *你改变false为true，但是你同步获取元素的数据是获取不到的，
-        *因为，数据是同步更新了，但是数据改变视图是异步的，所以立马获取不到，有以下解决方案
-        */
-         btn(){
-            
+        /* 
+         *在这里要说的就是改变数据状态，视图的更新是异步的，就是 例如 本来 show为false，
+         *你改变false为true，但是你同步获取元素的数据是获取不到的，
+         *因为，数据是同步更新了，但是数据改变视图是异步的，所以立马获取不到，有以下解决方案
+         */
+        btn() {
+
           // 1.定时器解决
           // setTimeout(()=>{
           //   console.log(this.$refs.show);
           // },1000)
-          
+
           // 2. 可以采用 async await 
           //  await this.show1()
           //  console.log(this.$refs.show);
-          
+
           //3. 可以采用this.$nextTick()
+          this.obj.b = 3
           this.show1()
-          this.$nextTick(()=>{
+          this.$nextTick(() => {
             console.log(this.$refs.show);
           })
-         
+
         },
-        show1(){
+        show1() {
           this.show = true
         }
       },
     })
   </script>
 </body>
+
 </html>
